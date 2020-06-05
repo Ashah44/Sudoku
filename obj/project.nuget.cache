@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "4G4SuMn1/0kGpbinqto7EuwJYhnQXrPixKFfgZ0sboYivteGq7I3tDRWEvHXfRf5oMnNrWqj3zmAkUf2ygIw8g==",
+  "success": true,
+  "projectFilePath": "/mnt/c/Users/Abhi Shah/Desktop/Sudoku/Sudoku/Sudoku.csproj",
+  "expectedPackageFiles": [
+    "/home/ashah44/.nuget/packages/microsoft.aspnetcore.app.ref/3.1.2/microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}

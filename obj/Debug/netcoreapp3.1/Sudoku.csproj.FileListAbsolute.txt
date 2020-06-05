@@ -1,0 +1,13 @@
+/mnt/c/Users/Abhi Shah/Desktop/Sudoku/Sudoku/bin/Debug/netcoreapp3.1/Sudoku
+/mnt/c/Users/Abhi Shah/Desktop/Sudoku/Sudoku/bin/Debug/netcoreapp3.1/Sudoku.deps.json
+/mnt/c/Users/Abhi Shah/Desktop/Sudoku/Sudoku/bin/Debug/netcoreapp3.1/Sudoku.runtimeconfig.json
+/mnt/c/Users/Abhi Shah/Desktop/Sudoku/Sudoku/bin/Debug/netcoreapp3.1/Sudoku.runtimeconfig.dev.json
+/mnt/c/Users/Abhi Shah/Desktop/Sudoku/Sudoku/bin/Debug/netcoreapp3.1/Sudoku.dll
+/mnt/c/Users/Abhi Shah/Desktop/Sudoku/Sudoku/bin/Debug/netcoreapp3.1/Sudoku.pdb
+/mnt/c/Users/Abhi Shah/Desktop/Sudoku/Sudoku/obj/Debug/netcoreapp3.1/Sudoku.csprojAssemblyReference.cache
+/mnt/c/Users/Abhi Shah/Desktop/Sudoku/Sudoku/obj/Debug/netcoreapp3.1/Sudoku.AssemblyInfoInputs.cache
+/mnt/c/Users/Abhi Shah/Desktop/Sudoku/Sudoku/obj/Debug/netcoreapp3.1/Sudoku.AssemblyInfo.cs
+/mnt/c/Users/Abhi Shah/Desktop/Sudoku/Sudoku/obj/Debug/netcoreapp3.1/Sudoku.csproj.CoreCompileInputs.cache
+/mnt/c/Users/Abhi Shah/Desktop/Sudoku/Sudoku/obj/Debug/netcoreapp3.1/Sudoku.dll
+/mnt/c/Users/Abhi Shah/Desktop/Sudoku/Sudoku/obj/Debug/netcoreapp3.1/Sudoku.pdb
+/mnt/c/Users/Abhi Shah/Desktop/Sudoku/Sudoku/obj/Debug/netcoreapp3.1/Sudoku.genruntimeconfig.cache
