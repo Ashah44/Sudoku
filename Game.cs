@@ -7,7 +7,8 @@ using System.Collections;
 //TODO:
 // Implement a type of game design where it asks user for diffuculty.
 // Implement a rules screen.
-// Implement the updating of the board and gameplay.
+// save and load sudoku files so user can resume whenever
+
 
 namespace Sudoku
 {
