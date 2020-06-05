@@ -9,16 +9,44 @@ namespace Sudoku{
 
         static void Main(string[] args){
             
-            Console.WriteLine("Hello Welcome to my Sudoku Game.");
             //variable to store board from board class
             string[,] testboard;
+            int choice = 0;
+            string user = "";
 
             Board board = new Board();
             board.setBoard(new string[9,9]);
             testboard = board.getBoard();
 
-            board.displayBoard(testboard, 2);
-            
+            Game gameplay = new Game();
+
+            //starts game and lets user choose the game
+            while(true){
+
+                choice = gameplay.menu(testboard);
+                if(choice == 1 | choice == 2 || choice == 3){
+                    Console.WriteLine();
+                    board.displayBoard(testboard, choice);
+                    Console.ReadKey();
+                }
+                else if(choice == 4){
+                    Console.WriteLine();
+                }   
+                else if(choice == 5){
+                    Console.WriteLine();
+                    gameplay.Instructions();
+                    Console.ReadKey();               
+                }  
+                else if(choice == 6){
+                    Console.WriteLine();
+                    Console.WriteLine("Exiting Game...");
+                    break;
+                }
+
+            }
+
+
+
 
         }
     }

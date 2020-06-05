@@ -5,8 +5,6 @@ using System;
 //This is the game board class. This class will intialize and build the board for the user.
 //As of right now it is an empty board 9 by 9 with dashes
 //TODO:
-//build a board with actual numbers to show sudoku board
-//randomize the numbers that will be on the board so it is not manual
 //error check the randomize to make sure it is solvable
 //Implement the updating of the board and gameplay.
 
@@ -79,7 +77,7 @@ namespace Sudoku{
                 2. col must not have the number generated in it
                 3. the 3 by 3 box must not have the number generated in it
             Then place number their and continue until it loops through entire board.
-            Then play the game
+            Then play the game.
         
         */
         private string[,] generateRandomBoard(string[,] board, int choice){
@@ -110,8 +108,8 @@ namespace Sudoku{
                             //checks the 3 by 3 location of the associated row
                             int checkRowBox = row - row % 3;
                             int checkColBox = col - col % 3;
-                            for(int k = checkRowBox; k < checkRowBox + (row % 3); k++ ){
-                                for(int l = checkColBox; l < checkColBox + (col % 3); l++){
+                            for(int k = checkRowBox; k < checkRowBox + 3; k++ ){
+                                for(int l = checkColBox; l < checkColBox + 3; l++){
                                     if(board[k,l].Equals(numToPlace.ToString())){
                                         count = count + 1;
                                     }
