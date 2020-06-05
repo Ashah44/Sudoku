@@ -6,7 +6,17 @@ namespace Sudoku
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Hello Welcome to my Sudoku Game.");
+            //variable to store board from board class
+            string[,] testboard;
+
+            Board board = new Board();
+            testboard = board.getBoard();
+
+            board.displayBoard(testboard);
+
+            
+
         }
     }
 }
