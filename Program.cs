@@ -17,7 +17,7 @@ namespace Sudoku{
             board.setBoard(new string[9,9]);
             testboard = board.getBoard();
 
-            board.displayBoard(testboard, 0);
+            board.displayBoard(testboard, 2);
             
 
         }
