@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections;
 
-namespace Sudoku
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
+//this class is just the main program where the game will be ran on
+//TODO:
+//put all the Class' together in here
+namespace Sudoku{
+    class Program{
+
+        static void Main(string[] args){
+            
             Console.WriteLine("Hello Welcome to my Sudoku Game.");
             //variable to store board from board class
             string[,] testboard;
@@ -15,8 +18,6 @@ namespace Sudoku
             testboard = board.getBoard();
 
             board.displayBoard(testboard);
-
-            
 
         }
     }
