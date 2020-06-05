@@ -41,7 +41,7 @@ namespace Sudoku{
                 Console.WriteLine("Here is the hard difficulty board.");
             }
             else{
-                Console.WriteLine("Incorrect input.");
+                //Console.WriteLine("Incorrect input.");
                 board = buildEmptyboard(this.board);
                 board = generateBoard(board);
             }
@@ -73,7 +73,8 @@ namespace Sudoku{
 
             var number = new Random();
             var rand = new Random();
-            for(int i = 0; i < board.Length; i++){
+            int count = 0;
+            for(int i = 0; i < 81; i++){
                 //random location on the board for row and col
                 int row = rand.Next(0,9);
                 int col = rand.Next(0,9);
@@ -83,13 +84,32 @@ namespace Sudoku{
                     int numToPlace = rand.Next(1,10);
                     //check rows
                     for(int j = 0; j < board.GetLength(0); j++){
-                        if(!(board[row, j].Equals(numToPlace.ToString()))){
-                            if(!(board[j, col].Equals(numToPlace.ToString()))){
-                                //now check the box your on
-                                board[row, col] = numToPlace.ToString();
+                        //checks the row to see if number is present their
+                        if(board[row, j].Equals(numToPlace.ToString())){
+                            count = count + 1;
+                        }
+                        //checks the col to see if number is present their
+                        if(board[j, col].Equals(numToPlace.ToString())){
+                            count = count + 1;
+                        }
+                        //checks the 3 by 3 location of the associated row
+                        int checkRowBox = row - row % 3;
+                        int checkColBox = col - col % 3;
+                        for(int k = checkRowBox; k < checkRowBox + (row % 3); k++ ){
+                            for(int l = checkColBox; l < checkColBox + (col % 3); l++){
+                                if(board[k,l].Equals(numToPlace.ToString())){
+                                    count = count + 1;
+                                }
                             }
                         }
                     }
+
+                    //count of 0 means that number can be placed in that location.
+                    //reset count afterwards
+                    if(count == 0){
+                        board[row,col] = numToPlace.ToString();
+                    }
+                    count = 0;
                 }
             }
 
