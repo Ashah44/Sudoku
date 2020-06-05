@@ -20,24 +20,22 @@ namespace Sudoku{
 
             Game gameplay = new Game();
 
-            //starts game and lets user choose the game
+            //starts game and lets user choose the option
             while(true){
 
                 choice = gameplay.menu(testboard);
-                if(choice == 1 | choice == 2 || choice == 3){
-                    Console.WriteLine();
+                if(choice == 1 | choice == 2 | choice == 3){ //easy,medium, hard boards
+
                     board.displayBoard(testboard, choice);
-                    Console.ReadKey();
+                    
                 }
-                else if(choice == 4){
+                else if(choice == 4){ //load game
                     Console.WriteLine();
                 }   
-                else if(choice == 5){
-                    Console.WriteLine();
+                else if(choice == 5){ // Instructions
                     gameplay.Instructions();
-                    Console.ReadKey();               
                 }  
-                else if(choice == 6){
+                else if(choice == 6){ //Exit game
                     Console.WriteLine();
                     Console.WriteLine("Exiting Game...");
                     break;
