@@ -11,6 +11,7 @@ namespace Sudoku
             string[,] testboard;
 
             Board board = new Board();
+            board.setBoard(new string[9,9]);
             testboard = board.getBoard();
 
             board.displayBoard(testboard);
