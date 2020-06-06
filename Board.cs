@@ -127,6 +127,7 @@ namespace Sudoku{
         public string[,] inputBoard(string[,] board, ArrayList moves){
 
             //parses user input format
+            Console.WriteLine();
             Console.WriteLine("Please enter your move as numbers: (Ex. 1 1 3)");
             bool canInput = true;
             string user = Console.ReadLine();
@@ -136,6 +137,9 @@ namespace Sudoku{
                 
                 string[] inputs = user.Split(' ');
 
+                if(user.ToUpper().Equals("QUIT") | user.ToUpper().Equals("SAVE")){
+                    break;
+                }
                 //checks for inputs from user against already placed values to make sure they can't be overwritten
                 for(int i = 0; i < moves.Count; i = i + 2){
                     if(inputs[0].Equals(moves[i]) && inputs[1].Equals(moves[i+1])){
@@ -198,9 +202,11 @@ namespace Sudoku{
                 canInput = true;
 
                 //ask for userinput
-                Console.WriteLine("Please enter your move: (Ex. 1 1 3:");
+                Console.WriteLine("Please enter your move: (Ex. 1 1 3):");
+                Console.WriteLine("To exit the game type save or quit");
                 //try-catch for input make sure it is valid
                 user = Console.ReadLine();
+                Console.WriteLine();
 
             }
 
