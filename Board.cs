@@ -25,11 +25,36 @@ namespace Sudoku{
            return board; 
         }
 
-        //displays an empty board (9 by 9)
-        public void displayBoard(string[,] board, int choice){
+        //displays the board (9 by 9)
+        public void displayBoard(string[,] board){
+
+            Console.Write("     1  ");
+            Console.Write("2  ");
+            Console.Write("3  ");
+            Console.Write("4  ");
+            Console.Write("5  ");
+            Console.Write("6  ");
+            Console.Write("7  ");
+            Console.Write("8  ");
+            Console.Write("9  ");
+            Console.WriteLine();
+            Console.WriteLine();
+            for(int i = 0; i< board.GetLength(0); i++){
+                Console.Write((i+1).ToString() + "    ");
+                for(int j = 0; j < board.GetLength(1); j++){
+                    Console.Write(board[i,j] + "  ");
+                }
+                Console.Write("\n");
+            }
+
+
+        }
+
+        //this function generates the board based on the choice given.
+        public string[,] choiceBoard(string[,] board, int choice){
 
             Console.WriteLine();
-            board = buildEmptyboard(this.board);
+            board = buildEmptyboard(board);
 
             //based on user choice a board will be printed.
             if(choice == 1){
@@ -51,32 +76,34 @@ namespace Sudoku{
                 //Console.WriteLine("Incorrect input.");
                 board = generateRandomBoard(board,choice);
             }
-            Console.Write("     1  ");
-            Console.Write("2  ");
-            Console.Write("3  ");
-            Console.Write("4  ");
-            Console.Write("5  ");
-            Console.Write("6  ");
-            Console.Write("7  ");
-            Console.Write("8  ");
-            Console.Write("9  ");
-            Console.WriteLine();
-            Console.WriteLine();
-            for(int i = 0; i< board.GetLength(0); i++){
-                Console.Write((i+1).ToString() + "    ");
-                for(int j = 0; j < board.GetLength(1); j++){
-                    Console.Write(board[i,j] + "  ");
-                }
-                Console.Write("\n");
-            }
 
-            Console.ReadKey();
+            return board;
         }
         
-        private static void easyBoard(string[,] board){
+        //this board will update based on the user input to actually play the game.
+        public string[,] inputBoard(string[,] board){
 
-            
+            string user = Console.ReadLine();
 
+            while(true){
+                
+                string[] inputs = user.Split(' ');
+                board[Convert.ToInt32(inputs[0])-1, Convert.ToInt32(inputs[1])-1] = inputs[2];
+                break;
+            }
+
+            return board;
+
+        }
+
+        private ArrayList checkExistingMoves(string[,] board){
+
+            ArrayList storeExistingMoves = new ArrayList();
+
+            // for(int i = 0; i< board.GetLength(0); i++){
+            //     for(int j = 0; j < board.GetLength(1); j++){
+            //     }
+            // }
         }
 
         //generate a board for different diffuculty.
@@ -92,7 +119,6 @@ namespace Sudoku{
                 3. the 3 by 3 box must not have the number generated in it
             Then place number their and continue until it loops through entire board.
             Then play the game.
-        
         */
         private string[,] generateRandomBoard(string[,] board, int choice){
 

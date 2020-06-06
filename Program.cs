@@ -26,7 +26,9 @@ namespace Sudoku{
                 choice = gameplay.menu(testboard);
                 if(choice == 1 | choice == 2 | choice == 3){ //easy,medium, hard boards
 
-                    board.displayBoard(testboard, choice);
+                    testboard = board.choiceBoard(testboard, choice);
+                    board.displayBoard(testboard);
+                    break;
                     
                 }
                 else if(choice == 4){ //load game
@@ -40,6 +42,12 @@ namespace Sudoku{
                     Console.WriteLine("Exiting Game...");
                     break;
                 }
+
+            }
+
+            if(choice == 1 | choice == 2 | choice == 3){
+                testboard = board.inputBoard(testboard);
+                board.displayBoard(testboard);
 
             }
 

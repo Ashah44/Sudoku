@@ -15,6 +15,8 @@ namespace Sudoku
         
         private string user = "";
         private int choice;
+
+        //function that represents the menu that the user can choice from.
         public int menu(string[,] board){
 
             Console.WriteLine();
@@ -29,10 +31,12 @@ namespace Sudoku
             Console.WriteLine();
             Console.WriteLine("Enter user input below.");
             user = Console.ReadLine();
+            //to check if input is castable to an int, if not then that means input was incorrect and not a possible choice, so try again.
             try{
                 choice = Convert.ToInt32(user);
             }
-            catch(FormatException e){
+            catch (FormatException)
+            {
                 choice = 0;
             }
 
@@ -48,6 +52,7 @@ namespace Sudoku
             return choice;
         }
 
+        //function to just show the user instructions on how to play the game.
         public void Instructions(){
 
             //featurees of the game
@@ -83,8 +88,6 @@ namespace Sudoku
             Console.WriteLine("Press any key to go back to the menu");
             Console.ReadKey();  
             Console.WriteLine();             
-
-
 
         }
 
