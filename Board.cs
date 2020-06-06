@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System;
 
 
@@ -85,28 +86,47 @@ namespace Sudoku{
         //all outputs will be offset by 1, so the border and inputs start at 1.
         public string[,] inputBoard(string[,] board, ArrayList moves){
 
-            //Console.WriteLine(moves[0] + " " + moves[1]);
-            string user = Console.ReadLine();
+            //parses user input format
+            Console.WriteLine("Please enter your move as numbers: (Ex. 1 1 3)");
             bool canInput = true;
+            string user = Console.ReadLine();
+
+            Console.WriteLine();
             while(true){
                 
-                //parses user input format
                 string[] inputs = user.Split(' ');
 
                 //checks for inputs from user against already placed values to make sure they can't be overwritten
                 for(int i = 0; i < moves.Count; i = i + 2){
                     if(inputs[0].Equals(moves[i]) && inputs[1].Equals(moves[i+1])){
                         canInput = false;
-                        Console.WriteLine("Invalid Move, Please Try Again");
+                        Console.WriteLine("That number can not be changed.");
+                        Console.WriteLine("Press any key to continue.");
+                        Console.ReadKey(true);
                         Console.WriteLine();
                     }
                 }
 
                 //can update bored as that value is changeable
-                if(canInput){
-                    Console.WriteLine((Convert.ToInt32(inputs[0])-1));
-                    Console.WriteLine((Convert.ToInt32(inputs[1])-1));
-                    board[(Convert.ToInt32(inputs[0])-1), (Convert.ToInt32(inputs[1])-1)] = inputs[2];
+                //after parsing input check if inputs are valid, if they are then update board.
+                if(IsNumeric(inputs[2])){
+                    try{
+                        if(canInput){
+                            board[(Convert.ToInt32(inputs[0])-1), (Convert.ToInt32(inputs[1])-1)] = inputs[2];
+                        }
+                    }
+                    catch(FormatException){
+                        Console.WriteLine("Wrong Format entered. Format is X Y Number between 1-9");
+                        Console.WriteLine("Press any key to continue.");
+                        Console.ReadKey(true);
+                        Console.WriteLine();
+                    }
+                }
+                else{
+                        Console.WriteLine("Wrong Format entered. Format is X Y Number between 1-9");
+                        Console.WriteLine("Press any key to continue.");
+                        Console.ReadKey(true);
+                        Console.WriteLine();
                 }
 
                 //shows the positions on the board that can't be changed
@@ -117,12 +137,19 @@ namespace Sudoku{
                     Console.Write(" (" + moves[i+4] + "," + moves[i+5] + ")");
                     Console.Write(" (" + moves[i+6] + "," + moves[i+7] + ")");
                     Console.WriteLine(" (" + moves[i+8] + "," + moves[i+9] + ")");
-
                 }
+                Console.WriteLine();
+
                 displayBoard(board);
+
+                Console.WriteLine();
                 canInput = true;
 
+                //ask for userinput
+                Console.WriteLine("Please enter your move: (Ex. 1(x) 1(y) 3(number)");
+                //try-catch for input make sure it is valid
                 user = Console.ReadLine();
+
             }
 
             return board;
@@ -236,6 +263,11 @@ namespace Sudoku{
         //getter for the board
         public string[,] getBoard(){
             return board;
+        }
+        
+        public bool IsNumeric(string value)
+        {
+            return value.All(char.IsNumber);
         }
         
 
