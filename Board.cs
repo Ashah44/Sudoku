@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System;
 
 
@@ -28,21 +29,21 @@ namespace Sudoku{
         //displays the board (9 by 9)
         public void displayBoard(string[,] board){
 
-            Console.Write("     1  ");
-            Console.Write("2  ");
-            Console.Write("3  ");
-            Console.Write("4  ");
-            Console.Write("5  ");
-            Console.Write("6  ");
-            Console.Write("7  ");
-            Console.Write("8  ");
-            Console.Write("9  ");
+            Console.Write("     1   ");
+            Console.Write("2   ");
+            Console.Write("3   ");
+            Console.Write("4   ");
+            Console.Write("5   ");
+            Console.Write("6   ");
+            Console.Write("7   ");
+            Console.Write("8   ");
+            Console.Write("9   ");
             Console.WriteLine();
             Console.WriteLine();
             for(int i = 0; i< board.GetLength(0); i++){
                 Console.Write((i+1).ToString() + "    ");
                 for(int j = 0; j < board.GetLength(1); j++){
-                    Console.Write(board[i,j] + "  ");
+                    Console.Write(board[i,j] + "   ");
                 }
                 Console.Write("\n");
             }
@@ -81,30 +82,72 @@ namespace Sudoku{
         }
         
         //this board will update based on the user input to actually play the game.
-        public string[,] inputBoard(string[,] board){
+        //all outputs will be offset by 1, so the border and inputs start at 1.
+        public string[,] inputBoard(string[,] board, ArrayList moves){
 
+            //Console.WriteLine(moves[0] + " " + moves[1]);
             string user = Console.ReadLine();
-
+            bool canInput = true;
             while(true){
                 
+                //parses user input format
                 string[] inputs = user.Split(' ');
-                board[Convert.ToInt32(inputs[0])-1, Convert.ToInt32(inputs[1])-1] = inputs[2];
-                break;
+
+                //checks for inputs from user against already placed values to make sure they can't be overwritten
+                for(int i = 0; i < moves.Count; i = i + 2){
+                    if(inputs[0].Equals(moves[i]) && inputs[1].Equals(moves[i+1])){
+                        canInput = false;
+                        Console.WriteLine("Invalid Move, Please Try Again");
+                        Console.WriteLine();
+                    }
+                }
+
+                //can update bored as that value is changeable
+                if(canInput){
+                    Console.WriteLine((Convert.ToInt32(inputs[0])-1));
+                    Console.WriteLine((Convert.ToInt32(inputs[1])-1));
+                    board[(Convert.ToInt32(inputs[0])-1), (Convert.ToInt32(inputs[1])-1)] = inputs[2];
+                }
+
+                //shows the positions on the board that can't be changed
+                Console.WriteLine("The Positions that can't be changed:");
+                for(int i = 0; i< moves.Count; i = i + 10){
+                    Console.Write(" (" + moves[i] + "," + moves[i+1] + ")");
+                    Console.Write(" (" + moves[i+2] + "," + moves[i+3] + ")");
+                    Console.Write(" (" + moves[i+4] + "," + moves[i+5] + ")");
+                    Console.Write(" (" + moves[i+6] + "," + moves[i+7] + ")");
+                    Console.WriteLine(" (" + moves[i+8] + "," + moves[i+9] + ")");
+
+                }
+                displayBoard(board);
+                canInput = true;
+
+                user = Console.ReadLine();
             }
 
             return board;
 
         }
 
-        private ArrayList checkExistingMoves(string[,] board){
+        //a function that holds all current positions on the board
+        //will be used to help make sure the original board is not altered
+        //offset by one because the board boarders start at 1, so easier for user to type in
+        public ArrayList checkExistingMoves(string[,] board){
 
             ArrayList storeExistingMoves = new ArrayList();
 
-            // for(int i = 0; i< board.GetLength(0); i++){
-            //     for(int j = 0; j < board.GetLength(1); j++){
-            //     }
-            // }
+            for(int i = 0; i < board.GetLength(0); i++){
+                for(int j = 0; j < board.GetLength(1); j++){
+                    if(!board[i,j].Equals("-")){
+                        storeExistingMoves.Add((i+1).ToString());
+                        storeExistingMoves.Add((j+1).ToString());
+                    }
+                }
+            }
+
+            return storeExistingMoves;
         }
+
 
         //generate a board for different diffuculty.
         //TODO:
@@ -168,10 +211,10 @@ namespace Sudoku{
                             if(choice == 3 && amountofNumbers == 20){
                                 return board;
                             }
-                            else if(choice == 2 && amountofNumbers == 30){
+                            else if(choice == 2 && amountofNumbers == 25){
                                 return board;
                             }
-                            else if(choice == 1 && amountofNumbers == 40){
+                            else if(choice == 1 && amountofNumbers == 30){
                                 return board;
                             }
 

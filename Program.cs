@@ -17,7 +17,7 @@ namespace Sudoku{
             Board board = new Board();
             board.setBoard(new string[9,9]);
             testboard = board.getBoard();
-
+            ArrayList checkMoves = new ArrayList();
             Game gameplay = new Game();
 
             //starts game and lets user choose the option
@@ -46,9 +46,10 @@ namespace Sudoku{
             }
 
             if(choice == 1 | choice == 2 | choice == 3){
-                testboard = board.inputBoard(testboard);
-                board.displayBoard(testboard);
-
+                checkMoves = board.checkExistingMoves(testboard);
+                testboard = board.inputBoard(testboard, checkMoves);
+                //board.displayBoard(testboard);
+                
             }
 
 
