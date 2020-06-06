@@ -48,8 +48,6 @@ namespace Sudoku{
                 }
                 Console.Write("\n");
             }
-
-
         }
 
         //this function generates the board based on the choice given.
@@ -82,6 +80,35 @@ namespace Sudoku{
             return board;
         }
         
+        //function to check if the surrounding area has the number trying to be inputted in their
+        //It would break one of the rules of a 3 by 3, same col or row.
+        public bool warningCheck(int row, int col, string inputs){
+
+            bool safe = false;
+            for(int j = 0; j < board.GetLength(0); j++){
+                //checks the row to see if number is present their
+                if(board[row, j].Equals(inputs)){
+                    Console.WriteLine(board[row,j]);
+                    safe = true;
+                }
+                //checks the col to see if number is present their
+                if(board[j, col].Equals(inputs)){
+                    safe = true;
+                }
+                //checks the 3 by 3 location of the associated row
+                int checkRowBox = row - row % 3;
+                int checkColBox = col - col % 3;
+                for(int k = checkRowBox; k < checkRowBox + 3; k++ ){
+                    for(int l = checkColBox; l < checkColBox + 3; l++){
+                        if(board[k,l].Equals(inputs)){
+                            safe = true;
+                        }
+                    }
+                }
+            }
+            return safe;
+        }
+
         //this board will update based on the user input to actually play the game.
         //all outputs will be offset by 1, so the border and inputs start at 1.
         public string[,] inputBoard(string[,] board, ArrayList moves){
@@ -90,7 +117,7 @@ namespace Sudoku{
             Console.WriteLine("Please enter your move as numbers: (Ex. 1 1 3)");
             bool canInput = true;
             string user = Console.ReadLine();
-
+            bool check;
             Console.WriteLine();
             while(true){
                 
@@ -109,8 +136,22 @@ namespace Sudoku{
 
                 //can update bored as that value is changeable
                 //after parsing input check if inputs are valid, if they are then update board.
+                //makes sure the last input parsed is a number
                 if(IsNumeric(inputs[2])){
+
                     try{
+                        
+                        //checks if value being placed is already in the row, col or 3 by 3
+                        check = warningCheck(Convert.ToInt32(inputs[0])-1, Convert.ToInt32(inputs[1])-1, inputs[2]);
+
+                        //give user a message about number breaking the rules
+                        if(check){
+                            Console.WriteLine("Remember that number exists in the row, col or 3x3");
+                            Console.WriteLine("Press any key to continue.");
+                            Console.ReadKey(true);
+                            Console.WriteLine();
+                        }
+
                         if(canInput){
                             board[(Convert.ToInt32(inputs[0])-1), (Convert.ToInt32(inputs[1])-1)] = inputs[2];
                         }
@@ -123,30 +164,23 @@ namespace Sudoku{
                     }
                 }
                 else{
+
                         Console.WriteLine("Wrong Format entered. Format is X Y Number between 1-9");
                         Console.WriteLine("Press any key to continue.");
                         Console.ReadKey(true);
                         Console.WriteLine();
                 }
+                
 
                 //shows the positions on the board that can't be changed
-                Console.WriteLine("The Positions that can't be changed:");
-                for(int i = 0; i< moves.Count; i = i + 10){
-                    Console.Write(" (" + moves[i] + "," + moves[i+1] + ")");
-                    Console.Write(" (" + moves[i+2] + "," + moves[i+3] + ")");
-                    Console.Write(" (" + moves[i+4] + "," + moves[i+5] + ")");
-                    Console.Write(" (" + moves[i+6] + "," + moves[i+7] + ")");
-                    Console.WriteLine(" (" + moves[i+8] + "," + moves[i+9] + ")");
-                }
-                Console.WriteLine();
-
+                displayExistingMoves(moves);
                 displayBoard(board);
 
                 Console.WriteLine();
                 canInput = true;
 
                 //ask for userinput
-                Console.WriteLine("Please enter your move: (Ex. 1(x) 1(y) 3(number)");
+                Console.WriteLine("Please enter your move: (Ex. 1(x) 1(y) 3(number):");
                 //try-catch for input make sure it is valid
                 user = Console.ReadLine();
 
@@ -175,6 +209,29 @@ namespace Sudoku{
             return storeExistingMoves;
         }
 
+        //function that displays all the exiting moves that can be used.
+        private void displayExistingMoves(ArrayList moves){
+
+            Console.WriteLine("The Positions that can't be changed:");
+
+            if(moves.Count % 10 == 0){
+                for(int i = 0; i< moves.Count; i = i + 10){
+                    Console.Write(" (" + moves[i] + "," + moves[i+1] + ")");
+                    Console.Write(" (" + moves[i+2] + "," + moves[i+3] + ")");
+                    Console.Write(" (" + moves[i+4] + "," + moves[i+5] + ")");
+                    Console.Write(" (" + moves[i+6] + "," + moves[i+7] + ")");
+                    Console.WriteLine(" (" + moves[i+8] + "," + moves[i+9] + ")");
+                }
+                Console.WriteLine();
+            }
+            else if(moves.Count % 5  == 0){
+                for(int i = 0; i< moves.Count; i = i + 6){
+                    Console.Write(" (" + moves[i] + "," + moves[i+1] + ")");
+                    Console.WriteLine(" (" + moves[i+2] + "," + moves[i+3] + ")");
+                } 
+            }
+        }
+
 
         //generate a board for different diffuculty.
         //TODO:
@@ -197,7 +254,7 @@ namespace Sudoku{
             int count = 0;
             int amountofNumbers = 0;
             if(choice == 1 | choice == 2 | choice == 3){
-                for(int i = 0; i < board.Length; i++){
+                for(int i = 0; i < board.Length*2; i++){
                     //random location on the board for row and col
                     int row = rand.Next(0,9);
                     int col = rand.Next(0,9);
@@ -265,7 +322,7 @@ namespace Sudoku{
             return board;
         }
         
-        public bool IsNumeric(string value)
+        private bool IsNumeric(string value)
         {
             return value.All(char.IsNumber);
         }
