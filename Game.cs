@@ -5,7 +5,6 @@ using System.Collections;
 // Through the rules and it's ability to choose which level of diffuculty to the user wants to play.
 // This class explains the rules and acts like a type of menu.
 //TODO:
-// Implement a rules screen.
 // save and load sudoku files so user can resume whenever
 
 

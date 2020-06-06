@@ -149,28 +149,33 @@ namespace Sudoku{
 
                 //can update bored as that value is changeable
                 //after parsing input check if inputs are valid, if they are then update board.
+                //Makes sure the input entered are within range (1-9)
                 //makes sure the last input parsed is a number
                 if(IsNumeric(inputs[2])){
-
                     try{
-                        
-                        //checks if value being placed is already in the row, col or 3 by 3
-                        check = warningCheck(Convert.ToInt32(inputs[0])-1, Convert.ToInt32(inputs[1])-1, inputs[2]);
+                            //checks if value being placed is already in the row, col or 3 by 3
+                            check = warningCheck(Convert.ToInt32(inputs[0])-1, Convert.ToInt32(inputs[1])-1, inputs[2]);
 
-                        //give user a message about number breaking the rules
-                        if(check){
-                            Console.WriteLine("Remember that number exists in the row, col or 3x3");
-                            Console.WriteLine("Press any key to continue.");
-                            Console.ReadKey(true);
-                            Console.WriteLine();
-                        }
+                            //give user a message about number breaking the rules
+                            if(check){
+                                Console.WriteLine("Remember that number exists in the row, col or 3x3");
+                                Console.WriteLine("Press any key to continue.");
+                                Console.ReadKey(true);
+                                Console.WriteLine();
+                            }
 
-                        if(canInput){
-                            board[(Convert.ToInt32(inputs[0])-1), (Convert.ToInt32(inputs[1])-1)] = inputs[2];
-                        }
+                            if(canInput){
+                                board[(Convert.ToInt32(inputs[0])-1), (Convert.ToInt32(inputs[1])-1)] = inputs[2];
+                            }
                     }
                     catch(FormatException){
-                        Console.WriteLine("Wrong Format entered. Format is X Y Number between 1-9");
+                        Console.WriteLine("Wrong Format entered. Format is X Y Number between numbers 1-9");
+                        Console.WriteLine("Press any key to continue.");
+                        Console.ReadKey(true);
+                        Console.WriteLine();
+                    }
+                    catch(IndexOutOfRangeException){
+                        Console.WriteLine("Inputs need to be in between numbers 1-9");
                         Console.WriteLine("Press any key to continue.");
                         Console.ReadKey(true);
                         Console.WriteLine();
@@ -193,7 +198,7 @@ namespace Sudoku{
                 canInput = true;
 
                 //ask for userinput
-                Console.WriteLine("Please enter your move: (Ex. 1(x) 1(y) 3(number):");
+                Console.WriteLine("Please enter your move: (Ex. 1 1 3:");
                 //try-catch for input make sure it is valid
                 user = Console.ReadLine();
 
