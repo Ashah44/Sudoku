@@ -5,16 +5,17 @@ using System;
 
 
 //This is the game board class. This class will intialize and build the board for the user.
+//It updates the board and 
 //As of right now it is an empty board 9 by 9 with dashes
 //TODO:
 //error check the randomize to make sure it is solvable
-//Implement the updating of the board and gameplay.
-
+//allow user to have a little guess dictionary
 namespace Sudoku{
     class Board{
 
         private string[,] board;
 
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //builds an empty sudoku board 9 by 9
         private static string[,] buildEmptyboard(string[,] board){
         
@@ -26,6 +27,9 @@ namespace Sudoku{
 
            return board; 
         }
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
         //displays the board (9 by 9)
         public void displayBoard(string[,] board){
@@ -49,6 +53,9 @@ namespace Sudoku{
                 Console.Write("\n");
             }
         }
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
         //this function generates the board based on the choice given.
         public string[,] choiceBoard(string[,] board, int choice){
@@ -79,7 +86,10 @@ namespace Sudoku{
 
             return board;
         }
-        
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
         //function to check if the surrounding area has the number trying to be inputted in their
         //It would break one of the rules of a 3 by 3, same col or row.
         public bool warningCheck(int row, int col, string inputs){
@@ -108,6 +118,9 @@ namespace Sudoku{
             }
             return safe;
         }
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
         //this board will update based on the user input to actually play the game.
         //all outputs will be offset by 1, so the border and inputs start at 1.
@@ -190,6 +203,9 @@ namespace Sudoku{
 
         }
 
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
         //a function that holds all current positions on the board
         //will be used to help make sure the original board is not altered
         //offset by one because the board boarders start at 1, so easier for user to type in
@@ -208,6 +224,9 @@ namespace Sudoku{
 
             return storeExistingMoves;
         }
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
         //function that displays all the exiting moves that can be used.
         private void displayExistingMoves(ArrayList moves){
@@ -232,10 +251,9 @@ namespace Sudoku{
             }
         }
 
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        //generate a board for different diffuculty.
-        //TODO:
-        //check the 3 by 3 we are in, check the row and column
+        //generates a board for different diffuculty.
         // simple backtracking algorithim
         /*Start with an empty board.
             loop through board, generate a random spot for the row and col. If spot is empty then proceed.
@@ -311,17 +329,21 @@ namespace Sudoku{
             return board;
         }
 
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
         //setter for gameboard
         public void setBoard(string[,] board){
             this.board = board;
         }
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         //getter for the board
         public string[,] getBoard(){
             return board;
         }
-        
+ //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+       
         private bool IsNumeric(string value)
         {
             return value.All(char.IsNumber);

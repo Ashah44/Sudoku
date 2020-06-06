@@ -16,6 +16,8 @@ namespace Sudoku
         private string user = "";
         private int choice;
 
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
         //function that represents the menu that the user can choice from.
         public int menu(string[,] board){
 
@@ -44,13 +46,16 @@ namespace Sudoku
 
                 Console.WriteLine("Incorrect Choice, please choose again.");
                 Console.WriteLine("Press any key to continue.");
-                Console.ReadKey();
+                Console.ReadKey(true);
                 Console.WriteLine();
                 
             }
 
             return choice;
         }
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
         //function to just show the user instructions on how to play the game.
         public void Instructions(){
@@ -90,6 +95,9 @@ namespace Sudoku
             Console.WriteLine();             
 
         }
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
     }
 }
