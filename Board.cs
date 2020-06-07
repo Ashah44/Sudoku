@@ -16,7 +16,10 @@ namespace Sudoku{
         private string[,] board;
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        
+        //function name: buildEmptyBoard
         //builds an empty sudoku board 9 by 9
+        
         private static string[,] buildEmptyboard(string[,] board){
         
            for(int i = 0; i< board.GetLength(0); i++){
@@ -30,7 +33,7 @@ namespace Sudoku{
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+        //function name: displayBoard
         //displays the board (9 by 9)
         public void displayBoard(string[,] board){
 
@@ -56,13 +59,13 @@ namespace Sudoku{
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+        //function name: choiceBoard
         //this function generates the board based on the choice given.
         public string[,] choiceBoard(string[,] board, int choice){
 
             Console.WriteLine();
             board = buildEmptyboard(board);
-
+            
             //based on user choice a board will be printed.
             if(choice == 1){
                 Console.WriteLine("Here is the easy difficulty board.");
@@ -89,7 +92,7 @@ namespace Sudoku{
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+        //function name: warningCheck
         //function to check if the surrounding area has the number trying to be inputted in their
         //It would break one of the rules of a 3 by 3, same col or row.
         private bool warningCheck(int row, int col, string inputs){
@@ -120,7 +123,7 @@ namespace Sudoku{
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+        //function name: inputBoard
         //this board will update based on the user input to actually play the game.
         //all outputs will be offset by 1, so the border and inputs start at 1.
         public string[,] inputBoard(string[,] board, ArrayList moves){
@@ -171,6 +174,10 @@ namespace Sudoku{
                                     
                                     if(canInput){
                                         board[(Convert.ToInt32(inputs[0])-1), (Convert.ToInt32(inputs[1])-1)] = inputs[2];
+                                    }
+                                    if(openSpace(board)){
+                                        Console.WriteLine("hello");
+
                                     }
                             }
                             catch(FormatException){ //makes sure the input matches formation
@@ -230,7 +237,7 @@ namespace Sudoku{
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+        //function name: checkExistingMoves
         //a function that holds all current positions on the board
         //will be used to help make sure the original board is not altered
         //offset by one because the board boarders start at 1, so easier for user to type in
@@ -252,7 +259,7 @@ namespace Sudoku{
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+        //function name: displayExistingMoves
         //function that displays all the exiting moves that can be used.
         private void displayExistingMoves(ArrayList moves){
 
@@ -274,6 +281,16 @@ namespace Sudoku{
                     Console.WriteLine(" (" + moves[i+2] + "," + moves[i+3] + ")");
                 } 
             }
+        }
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //function name: solveBoard
+        //this function will solve and tell the player if the board is solvable. 
+        //If needed the user can see the solvedBoard
+        public void solveBoard(string[,] board){
+
+
         }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -341,19 +358,41 @@ namespace Sudoku{
         public void setBoard(string[,] board){
             this.board = board;
         }
+
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         //getter for the board
         public string[,] getBoard(){
             return board;
         }
- //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-       
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //function name: Isnumeric
+        //checks if the string input is a number
         private bool IsNumeric(string value)
         {
             return value.All(char.IsNumber);
         }
         
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //function name: openspace
+        // checks if the board has had open space
+        private bool openSpace(string[,] board){
+
+            for(int i = 0; i < board.GetLength(0); i++){
+                for(int j = 0; j < board.GetLength(0); j++){
+                    if(board[i,j].Equals("-")){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
     }
 }
