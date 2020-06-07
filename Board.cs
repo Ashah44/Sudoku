@@ -69,22 +69,21 @@ namespace Sudoku{
             //based on user choice a board will be printed.
             if(choice == 1){
                 Console.WriteLine("Here is the easy difficulty board.");
-                board = generateRandomBoard(board, choice);
+                board = generateDifficultyBoard(board, choice);
 
             }
             else if(choice == 2){
                 Console.WriteLine("Here is the medium difficulty board.");
-                board = generateRandomBoard(board,choice);
-
+                board = generateDifficultyBoard(board, choice);
             }
             else if(choice == 3){
                 Console.WriteLine("Here is the hard difficulty board.");
-                board = generateRandomBoard(board,choice);
+                board = generateDifficultyBoard(board, choice);
 
             }
             else{
                 //Console.WriteLine("Incorrect input.");
-                board = generateRandomBoard(board,choice);
+                board = buildEmptyboard(board);
             }
 
             return board;
@@ -123,36 +122,6 @@ namespace Sudoku{
             }
             return safe;
         }
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        // private bool warningCheck(int row, int col, int numToPlace){
-
-        //     bool safe = false;
-        //     for(int j = 0; j < board.GetLength(0); j++){
-        //         //checks the col to see if number is present their
-        //         if(board[row, j].Equals(inputs)){
-        //             safe = true;
-        //             return safe;
-        //         }
-        //         //checks the row to see if number is present their
-        //         if(board[j, col].Equals(inputs)){
-        //             safe = true;
-        //             return safe;
-        //         }
-        //         //checks the 3 by 3 location of the associated row
-        //         int checkRowBox = row - row % 3;
-        //         int checkColBox = col - col % 3;
-        //         for(int k = checkRowBox; k < checkRowBox + 3; k++ ){
-        //             for(int l = checkColBox; l < checkColBox + 3; l++){
-        //                 if(board[k,l].Equals(inputs)){
-        //                     safe = true;
-        //                     return safe;
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     return safe;
-        // }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -207,45 +176,45 @@ namespace Sudoku{
                                     
                                     if(canInput){
                                         board[(Convert.ToInt32(inputs[0])-1), (Convert.ToInt32(inputs[1])-1)] = inputs[2];
-                                    }
+                                    } //end of if
                                     if(openSpace(board)){
                                         Console.WriteLine("hello");
 
-                                    }
-                            }
+                                    } // end of if
+                            } //end of try
                             catch(FormatException){ //makes sure the input matches formation
                                 Console.WriteLine("Wrong Format entered. Format is X Y Number between numbers 1-9.");
                                 Console.WriteLine("Press any key to continue.");
                                 Console.ReadKey(true);
                                 Console.WriteLine();
-                            }
+                            } //end of catch
                             catch(IndexOutOfRangeException){ //makes sure input was not out of range
                                 Console.WriteLine("Inputs need to be in between numbers 1-9");
                                 Console.WriteLine("Press any key to continue.");
                                 Console.ReadKey(true);
                                 Console.WriteLine();
-                            }
-                        }
+                            } //end of catch
+                        } //end of if statement
                         else{ //error message
                             Console.WriteLine("The value at that position must be in between 1-9.");
                             Console.WriteLine("Press any key to continue.");
                             Console.ReadKey(true);
                             Console.WriteLine();
-                        }
-                    }
+                        } //end of else
+                    } //end of if statement
                     else{ //error message
                         Console.WriteLine("Wrong Format entered. Format is X Y Number between 1-9.");
                         Console.WriteLine("Press any key to continue.");
                         Console.ReadKey(true);
                         Console.WriteLine();
-                    }
-                }
+                    } //end of else
+                } //end of try block
                 catch(IndexOutOfRangeException){ //make sure input is valid not just a bunch of random stuff
                     Console.WriteLine("Invalid input.");
                     Console.WriteLine("Press any key to continue.");
                     Console.ReadKey(true);
                     Console.WriteLine();
-                }
+                } //end of catch
                 
 
                 //shows the positions on the board that can't be changed
@@ -262,7 +231,7 @@ namespace Sudoku{
                 user = Console.ReadLine();
                 Console.WriteLine();
 
-            }
+            } //end of while loop
 
             return board;
 
@@ -283,9 +252,9 @@ namespace Sudoku{
                     if(!board[i,j].Equals("-")){
                         storeExistingMoves.Add((i+1).ToString());
                         storeExistingMoves.Add((j+1).ToString());
-                    }
-                }
-            }
+                    } //end of if statement
+                } //end of for loop
+            } //end of for loop
 
             return storeExistingMoves;
         }
@@ -305,26 +274,67 @@ namespace Sudoku{
                     Console.Write(" (" + moves[i+4] + "," + moves[i+5] + ")");
                     Console.Write(" (" + moves[i+6] + "," + moves[i+7] + ")");
                     Console.WriteLine(" (" + moves[i+8] + "," + moves[i+9] + ")");
-                }
+                } //end of for loop
                 Console.WriteLine();
-            }
+            } //end of if statement
             else if(moves.Count % 5  == 0){
                 for(int i = 0; i< moves.Count; i = i + 6){
                     Console.Write(" (" + moves[i] + "," + moves[i+1] + ")");
                     Console.WriteLine(" (" + moves[i+2] + "," + moves[i+3] + ")");
-                } 
-            }
+                } //end of for loop
+                Console.WriteLine();
+            } //end of else if statement
         }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        //function name: solveBoard
+        //function name: checkSolvedBoard
         //this function will solve and tell the player if the board is solvable. 
         //If needed the user can see the solvedBoard
-        public void solveBoard(string[,] board){
+        public void checkSolvedBoard(string[,] board){
 
-
+            
         }
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //function name: generateDifficultyBoard
+        //generates board for three different difficulties.
+        
+        //hard version will have 20 numbers on the board (choice == 3)
+        //medium version will have 25 numbers on the board(choice == 2)
+        //easy version will have 30 numbers on the board(choice == 1)
+        private string[,] generateDifficultyBoard(string[,] board, int choice){
+
+
+            //generates a fully solved board
+            //now strip away some numbers to let user solve
+            board = generateRandomBoard(board);
+            var rand = new Random();
+            int deleteNumber = 0;
+            while(deleteNumber != 500){
+                int row = rand.Next(0, 9);
+                int col = rand.Next(0, 9);
+
+                if(!board[row, col].Equals("-")){
+                    board[row, col] = "-";
+                    deleteNumber = deleteNumber + 1;
+                }
+
+                if(choice == 3 && deleteNumber == 61){
+                    return board;
+                }
+                else if(choice == 2 && deleteNumber == 56){
+                    return board;
+                }
+                else if(choice == 1 && deleteNumber == 51){
+                    return board;
+                }
+            }
+
+            return board;
+        }
+
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -341,43 +351,41 @@ namespace Sudoku{
             The end of the function the board will be a solved board of sudoku.
         */
         //use recursion in case it doesn't fill all the spots.
-        private string[,] generateRandomBoard(string[,] board, int choice){
+        private string[,] generateRandomBoard(string[,] board){
 
             bool check;
             int[] numToPlace = new int[9]{1, 2, 3, 4, 5, 6, 7 , 8, 9};
             int row = -1;
             int col = -1;
-            if(choice == 1 | choice == 2 | choice == 3){
-                for(int i = 0; i < 81; i++){
-                    //random location on the board for row and col
-                    row = i/9;
-                    col = i%9;
-                    //valid to keep going since location is empty
-                    if(board[row, col].Equals("-")){
-                        //shuffle array of 1-9 to ranomize board.
-                        numToPlace = shuffleArray(numToPlace);
-                        for(int p = 0; p < numToPlace.Length; p++){
-                            check = warningCheck(row, col, numToPlace[p].ToString());
-                            //check is false than that means that number can be placed in that location.
-                            //reset count afterwards
-                            if(check == false){
-                                board[row,col] = numToPlace[p].ToString();
 
-                            } //end of if statement
-                        }
-                    } //end of if statement
-                    
-                } //end of for loop
+            for(int i = 0; i < 81; i++){
+                //random location on the board for row and col
+                row = i/9;
+                col = i%9;
+                //valid to keep going since location is empty
+                if(board[row, col].Equals("-")){
+                    //shuffle array of 1-9 to randomize board.
+                    numToPlace = shuffleArray(numToPlace);
+                    for(int p = 0; p < numToPlace.Length; p++){
+                        check = warningCheck(row, col, numToPlace[p].ToString());
+                        //check is false than that means that number can be placed in that location.
+                        if(check == false){
+                            board[row,col] = numToPlace[p].ToString();
+
+                        } //end of if statement
+                    }
+                } //end of if statement
                 
-            } //end of if statement
+            } //end of for loop
 
+            //check to see if board is solve, if not then destroy current board and try again
             if(openSpace(board) == false){
                 return board;
-            }
+            } //end of if statement
             else{
                 board = buildEmptyboard(board);
-                generateRandomBoard(board, choice);
-            }
+                generateRandomBoard(board);
+            } //end of else statement
 
             return board;
         }
@@ -390,19 +398,19 @@ namespace Sudoku{
 
             var rand = new Random();
 
-            //loop that starts from the back and iterates to the beginning
-            for (int i = numToPlace.Length - 1; i > 0; i--) { 
+            //loop through the array that has 1-9 and then shuffle the position randomly
+            for (int i = 0; i < numToPlace.Length; i++) { 
               
-                // Pick a random index 
-                // from 0 to i 
-                int randPosition = rand.Next(0, i+1); 
+                // Pick a random index from the array to use
+                int randPosition = rand.Next(i, numToPlace.Length); 
                 
                 // Swap the current position with the random position 
                 int temp = numToPlace[i]; 
                 numToPlace[i] = numToPlace[randPosition]; 
                 numToPlace[randPosition] = temp; 
-            }
+            } //end of for loop
 
+            //checks the arranged values to make sure they work
             // for (int i = 0; i < numToPlace.Length; i++) {
             //     Console.Write(numToPlace[i] + " ");
             // }
