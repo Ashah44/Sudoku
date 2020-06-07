@@ -92,13 +92,12 @@ namespace Sudoku{
 
         //function to check if the surrounding area has the number trying to be inputted in their
         //It would break one of the rules of a 3 by 3, same col or row.
-        public bool warningCheck(int row, int col, string inputs){
+        private bool warningCheck(int row, int col, string inputs){
 
             bool safe = false;
             for(int j = 0; j < board.GetLength(0); j++){
                 //checks the row to see if number is present their
                 if(board[row, j].Equals(inputs)){
-                    Console.WriteLine(board[row,j]);
                     safe = true;
                 }
                 //checks the col to see if number is present their
@@ -156,10 +155,8 @@ namespace Sudoku{
                 //Makes sure the input entered are within range (1-9)
                 //makes sure the last input parsed is a number
                 try{ //try to make sure input is actually in the right format
-                    //checks if input value is a number
-                    if(IsNumeric(inputs[2])){
-                        //make sure position input is between 1 and 9
-                        if(Convert.ToInt32(inputs[2]) > 0 && Convert.ToInt32(inputs[2]) < 10){
+                    if(IsNumeric(inputs[2])){ //checks if input value is a number
+                        if(Convert.ToInt32(inputs[2]) > 0 && Convert.ToInt32(inputs[2]) < 10){  //make sure value inputted  is between 1 and 9
                             try{
                                     //checks if value being placed is already in the row, col or 3 by 3
                                     check = warningCheck(Convert.ToInt32(inputs[0])-1, Convert.ToInt32(inputs[1])-1, inputs[2]);
@@ -297,7 +294,7 @@ namespace Sudoku{
 
             var number = new Random();
             var rand = new Random();
-            int count = 0;
+            bool check;
             int amountofNumbers = 0;
             if(choice == 1 | choice == 2 | choice == 3){
                 for(int i = 0; i < board.Length*2; i++){
@@ -309,30 +306,11 @@ namespace Sudoku{
                         //now check if number generated is possible in that row, column or 3 by 3
                         int numToPlace = rand.Next(1,10);
                         //check rows
-                        for(int j = 0; j < board.GetLength(0); j++){
-                            //checks the row to see if number is present their
-                            if(board[row, j].Equals(numToPlace.ToString())){
-                                count = count + 1;
-                            }
-                            //checks the col to see if number is present their
-                            if(board[j, col].Equals(numToPlace.ToString())){
-                                count = count + 1;
-                            }
-                            //checks the 3 by 3 location of the associated row
-                            int checkRowBox = row - row % 3;
-                            int checkColBox = col - col % 3;
-                            for(int k = checkRowBox; k < checkRowBox + 3; k++ ){
-                                for(int l = checkColBox; l < checkColBox + 3; l++){
-                                    if(board[k,l].Equals(numToPlace.ToString())){
-                                        count = count + 1;
-                                    }
-                                }
-                            }
-                        }
+                        check = warningCheck(row, col, numToPlace.ToString());
 
-                        //count of 0 means that number can be placed in that location.
+                        //check is false than that means that number can be placed in that location.
                         //reset count afterwards
-                        if(count == 0){
+                        if(check == false){
                             board[row,col] = numToPlace.ToString();
                             amountofNumbers = amountofNumbers + 1;
                             //hard version will have 20 numbers on the board (choice == 3)
@@ -349,7 +327,6 @@ namespace Sudoku{
                             }
 
                         }
-                        count = 0;
                     }
                 }
             }
