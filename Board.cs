@@ -99,13 +99,15 @@ namespace Sudoku{
 
             bool safe = false;
             for(int j = 0; j < board.GetLength(0); j++){
-                //checks the row to see if number is present their
+                //checks the col to see if number is present their
                 if(board[row, j].Equals(inputs)){
                     safe = true;
+                    return safe;
                 }
-                //checks the col to see if number is present their
+                //checks the row to see if number is present their
                 if(board[j, col].Equals(inputs)){
                     safe = true;
+                    return safe;
                 }
                 //checks the 3 by 3 location of the associated row
                 int checkRowBox = row - row % 3;
@@ -114,12 +116,43 @@ namespace Sudoku{
                     for(int l = checkColBox; l < checkColBox + 3; l++){
                         if(board[k,l].Equals(inputs)){
                             safe = true;
+                            return safe;
                         }
                     }
                 }
             }
             return safe;
         }
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // private bool warningCheck(int row, int col, int numToPlace){
+
+        //     bool safe = false;
+        //     for(int j = 0; j < board.GetLength(0); j++){
+        //         //checks the col to see if number is present their
+        //         if(board[row, j].Equals(inputs)){
+        //             safe = true;
+        //             return safe;
+        //         }
+        //         //checks the row to see if number is present their
+        //         if(board[j, col].Equals(inputs)){
+        //             safe = true;
+        //             return safe;
+        //         }
+        //         //checks the 3 by 3 location of the associated row
+        //         int checkRowBox = row - row % 3;
+        //         int checkColBox = col - col % 3;
+        //         for(int k = checkRowBox; k < checkRowBox + 3; k++ ){
+        //             for(int l = checkColBox; l < checkColBox + 3; l++){
+        //                 if(board[k,l].Equals(inputs)){
+        //                     safe = true;
+        //                     return safe;
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     return safe;
+        // }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -305,52 +338,78 @@ namespace Sudoku{
                 2. col must not have the number generated in it
                 3. the 3 by 3 box must not have the number generated in it
             Then place number their and continue until it loops through entire board.
-            Then play the game.
+            The end of the function the board will be a solved board of sudoku.
         */
+        //use recursion in case it doesn't fill all the spots.
         private string[,] generateRandomBoard(string[,] board, int choice){
 
-            var number = new Random();
-            var rand = new Random();
             bool check;
-            int amountofNumbers = 0;
+            int[] numToPlace = new int[9]{1, 2, 3, 4, 5, 6, 7 , 8, 9};
+            int row = -1;
+            int col = -1;
             if(choice == 1 | choice == 2 | choice == 3){
-                for(int i = 0; i < board.Length*2; i++){
+                for(int i = 0; i < 81; i++){
                     //random location on the board for row and col
-                    int row = rand.Next(0,9);
-                    int col = rand.Next(0,9);
+                    row = i/9;
+                    col = i%9;
                     //valid to keep going since location is empty
-                    if(board[row, col] == "-"){
-                        //now check if number generated is possible in that row, column or 3 by 3
-                        int numToPlace = rand.Next(1,10);
-                        //check rows
-                        check = warningCheck(row, col, numToPlace.ToString());
+                    if(board[row, col].Equals("-")){
+                        //shuffle array of 1-9 to ranomize board.
+                        numToPlace = shuffleArray(numToPlace);
+                        for(int p = 0; p < numToPlace.Length; p++){
+                            check = warningCheck(row, col, numToPlace[p].ToString());
+                            //check is false than that means that number can be placed in that location.
+                            //reset count afterwards
+                            if(check == false){
+                                board[row,col] = numToPlace[p].ToString();
 
-                        //check is false than that means that number can be placed in that location.
-                        //reset count afterwards
-                        if(check == false){
-                            board[row,col] = numToPlace.ToString();
-                            amountofNumbers = amountofNumbers + 1;
-                            //hard version will have 20 numbers on the board (choice == 3)
-                            //medium version will have 30 numbers on the board(choice == 2)
-                            //easy version will have 40 numbers on the board(choice == 1)
-                            if(choice == 3 && amountofNumbers == 20){
-                                return board;
-                            }
-                            else if(choice == 2 && amountofNumbers == 25){
-                                return board;
-                            }
-                            else if(choice == 1 && amountofNumbers == 30){
-                                return board;
-                            }
-
+                            } //end of if statement
                         }
-                    }
-                }
+                    } //end of if statement
+                    
+                } //end of for loop
+                
+            } //end of if statement
+
+            if(openSpace(board) == false){
+                return board;
+            }
+            else{
+                board = buildEmptyboard(board);
+                generateRandomBoard(board, choice);
             }
 
             return board;
         }
 
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //function name: randArray
+        //randomize the array from values 1-9
+        private int[] shuffleArray(int[] numToPlace){
+
+            var rand = new Random();
+
+            //loop that starts from the back and iterates to the beginning
+            for (int i = numToPlace.Length - 1; i > 0; i--) { 
+              
+                // Pick a random index 
+                // from 0 to i 
+                int randPosition = rand.Next(0, i+1); 
+                
+                // Swap the current position with the random position 
+                int temp = numToPlace[i]; 
+                numToPlace[i] = numToPlace[randPosition]; 
+                numToPlace[randPosition] = temp; 
+            }
+
+            // for (int i = 0; i < numToPlace.Length; i++) {
+            //     Console.Write(numToPlace[i] + " ");
+            // }
+            //     Console.WriteLine();
+
+            return numToPlace;
+        }
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -378,7 +437,7 @@ namespace Sudoku{
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         //function name: openspace
-        // checks if the board has had open space
+        // checks if the board has has open spot
         private bool openSpace(string[,] board){
 
             for(int i = 0; i < board.GetLength(0); i++){
