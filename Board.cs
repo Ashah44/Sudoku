@@ -37,23 +37,31 @@ namespace Sudoku{
         //displays the board (9 by 9)
         public void displayBoard(string[,] board){
 
-            Console.Write("     1   ");
+            Console.Write("      1   ");
             Console.Write("2   ");
             Console.Write("3   ");
-            Console.Write("4   ");
+            Console.Write("   4   ");
             Console.Write("5   ");
             Console.Write("6   ");
-            Console.Write("7   ");
+            Console.Write("   7   ");
             Console.Write("8   ");
             Console.Write("9   ");
             Console.WriteLine();
             Console.WriteLine();
             for(int i = 0; i< board.GetLength(0); i++){
-                Console.Write((i+1).ToString() + "    ");
+                Console.Write((i+1).ToString() + "     ");
                 for(int j = 0; j < board.GetLength(1); j++){
+
                     Console.Write(board[i,j] + "   ");
+                    if(j == 2 | j == 5){
+                        Console.Write("|  ");
+                    }
                 }
-                Console.Write("\n");
+                if(i == 2 | i == 5){
+                    Console.WriteLine();
+                    Console.Write("    -------------------------------------------");
+                }
+                Console.WriteLine();
             }
         }
 
