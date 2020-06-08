@@ -74,7 +74,7 @@ namespace Sudoku
             Console.WriteLine("  The number is the one associated with that position.");
             Console.WriteLine("  Three text files will be associated to download");
             Console.WriteLine("Press any key to learn the rules.");
-            Console.ReadKey();
+            Console.ReadKey(true);
 
             Console.WriteLine();
             
@@ -90,13 +90,24 @@ namespace Sudoku
             Console.WriteLine("  You will be able to save your game when the feature is ready.");
             Console.WriteLine();
             Console.WriteLine("Press any key to go back to the menu");
-            Console.ReadKey();  
+            Console.ReadKey(true);  
             Console.WriteLine();             
 
         }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+        public void load(){
 
+            Console.WriteLine();
+            Console.WriteLine("This feature is not implemented yet.");
+            Console.WriteLine();
+            Console.WriteLine("Press any key to go back to the menu");
+            Console.ReadKey(true);  
+            Console.WriteLine(); 
+
+        }
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     }
 }

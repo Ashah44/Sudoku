@@ -32,7 +32,8 @@ namespace Sudoku{
                     
                 }
                 else if(choice == 4){ //load game
-                    Console.WriteLine();
+                    gameplay.load();
+
                 }   
                 else if(choice == 5){ // Instructions
                     gameplay.Instructions();
