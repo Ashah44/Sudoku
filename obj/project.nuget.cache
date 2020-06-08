@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "4G4SuMn1/0kGpbinqto7EuwJYhnQXrPixKFfgZ0sboYivteGq7I3tDRWEvHXfRf5oMnNrWqj3zmAkUf2ygIw8g==",
+  "dgSpecHash": "0cZNb9+/PnbMMWoCdm+IZiiJ7b7q3pu72D2epBl2SVWo0LVRP7mobEv5BqmnBwFuDZBhmG2Mvd5JFukNo601mA==",
   "success": true,
   "projectFilePath": "/mnt/c/Users/Abhi Shah/Desktop/Sudoku/Sudoku/Sudoku.csproj",
   "expectedPackageFiles": [
+    "/home/ashah44/.nuget/packages/microsoft.netcore.app.runtime.linux-x64/3.1.4/microsoft.netcore.app.runtime.linux-x64.3.1.4.nupkg.sha512",
+    "/home/ashah44/.nuget/packages/microsoft.aspnetcore.app.runtime.linux-x64/3.1.4/microsoft.aspnetcore.app.runtime.linux-x64.3.1.4.nupkg.sha512",
     "/home/ashah44/.nuget/packages/microsoft.aspnetcore.app.ref/3.1.2/microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
   ],
   "logs": []
