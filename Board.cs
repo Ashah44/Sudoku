@@ -68,6 +68,7 @@ namespace Sudoku{
             
             //based on user choice a board will be printed.
             if(choice == 1){
+                
                 Console.WriteLine("Here is the easy difficulty board.");
                 board = generateDifficultyBoard(board, choice);
 
@@ -134,6 +135,7 @@ namespace Sudoku{
             Console.WriteLine();
             Console.WriteLine("Please enter your move as numbers: (Ex. 1 1 3)");
             bool canInput = true;
+            bool winner;
             string user = Console.ReadLine();
             bool check;
             Console.WriteLine();
@@ -176,11 +178,8 @@ namespace Sudoku{
                                     
                                     if(canInput){
                                         board[(Convert.ToInt32(inputs[0])-1), (Convert.ToInt32(inputs[1])-1)] = inputs[2];
-                                    } //end of if
-                                    if(openSpace(board)){
-                                        Console.WriteLine("hello");
+                                    } 
 
-                                    } // end of if
                             } //end of try
                             catch(FormatException){ //makes sure the input matches formation
                                 Console.WriteLine("Wrong Format entered. Format is X Y Number between numbers 1-9.");
@@ -224,6 +223,20 @@ namespace Sudoku{
                 Console.WriteLine();
                 canInput = true;
 
+                //still openSpace to be put on board
+                if(openSpace(board)== false){
+                    winner = checkSolvedBoard(board);
+                    if(winner){
+                        Console.WriteLine("Congratulations, you win.");
+                        break;
+                    }
+                    else{
+                        Console.WriteLine("Looks like you made a mistake.");
+                        Console.WriteLine("Try going through again and fixing your mistake.");
+                        Console.WriteLine();
+                    }
+                }
+                
                 //ask for userinput
                 Console.WriteLine("Please enter your move: (Ex. 1 1 3):");
                 Console.WriteLine("To exit the game type save or quit.");
@@ -289,12 +302,75 @@ namespace Sudoku{
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         //function name: checkSolvedBoard
-        //this function will solve and tell the player if the board is solvable. 
-        //If needed the user can see the solvedBoard
-        public void checkSolvedBoard(string[,] board){
+        //this function will check if the board is solved.
+        //If needed the user can see the solvedBoard - needs implementing
+        //doesn't use backtracing
+        private bool checkSolvedBoard(string[,] board){
 
+            //check if every row,col and 3 by 3 on the board is equal to the sum of 1-9.
+            int sum = 0;
+            int target = 45;
+            bool solved = false;
+            int counter = 0;
+
+            //row checker
+            for(int i = 0; i < board.GetLength(0); i++){
+                for(int j = 0; j < board.GetLength(1); j++){
+                    sum = sum + Convert.ToInt32(board[i,j]);
+                    if(sum == target){
+                        counter = counter + 1;
+                        sum = 0;
+                    }
+                }
+            }
+
+            //col checker
+            for(int i = 0; i < board.GetLength(0); i++){
+                for(int j = 0; j < board.GetLength(1); j++){
+                    sum = sum + Convert.ToInt32(board[j,i]);
+                    if(sum == target){
+                        counter = counter + 1;
+                        sum = 0;
+                    }
+                }
+            }
+
+            //3 by 3 checker
+            for(int i = 0; i < board.GetLength(0); i = i + 3 ){
+                for(int j = 0; j < board.GetLength(1); j = j + 3){
+                //checks the 3 by 3 location of the associated row
+                    int checkRowBox = i - i % 3;
+                    int checkColBox = j - j % 3;
+                    for(int k = checkRowBox; k < checkRowBox + 3; k++ ){
+                        for(int l = checkColBox; l < checkColBox + 3; l++){
+                            sum = sum + Convert.ToInt32(board[k,l]);
+                            if(sum == target){
+                                counter = counter + 1;
+                                sum = 0;
+                            }
+                            
+                        }
+                    }
+                }
+            }
+
+            //if counter has hit 27 that means it passed all 3 checks and you win.
+            if(counter == 27){
+                solved = true;
+            }
             
+            return solved;
         }
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        // //function name: checkSolvedBoard
+        // //this function will check if the board is solved.
+        // //If needed the user can see the solvedBoard - needs implementing
+        // //users backtracing.
+        // public bool checkSolvedBoard(string[,] board){
+
+        //     return false;
+        // }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -448,6 +524,7 @@ namespace Sudoku{
         // checks if the board has has open spot
         private bool openSpace(string[,] board){
 
+            //has open space
             for(int i = 0; i < board.GetLength(0); i++){
                 for(int j = 0; j < board.GetLength(0); j++){
                     if(board[i,j].Equals("-")){
@@ -455,6 +532,8 @@ namespace Sudoku{
                     }
                 }
             }
+
+            // no more opens spaces check for win
             return false;
         }
 

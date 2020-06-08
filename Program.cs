@@ -13,7 +13,7 @@ namespace Sudoku{
             string[,] testboard;
             int choice = 0;
             string user = "";
-
+            bool winner;
             Board board = new Board();
             board.setBoard(new string[9,9]);
             testboard = board.getBoard();
